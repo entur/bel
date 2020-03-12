@@ -22,7 +22,7 @@
     "chart.js": "1.1.1",
     "chartjs": "0.3.24",
     "classnames": "2.2.5",
-    "convict": "3.0.0",
+    "convict": "4.0.1",
     "describe": "1.2.0",
     "express": "^4.17.1",
     "image-webpack-loader": "^4.6.0",
