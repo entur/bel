@@ -9,7 +9,9 @@
     "start": "node server.js",
     "test": "./node_modules/.bin/mocha -r jsdom-global/register --compilers js:babel-core/register ./tests/**",
     "prod": "BABEL_ENV=production NODE_ENV=production node server.js",
-    "dev": "port=9000 BABEL_ENV=development NODE_ENV=development node server.js"
+    "dev": "port=9000 BABEL_ENV=development NODE_ENV=development node server.js",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "author": "Sean Erik Scully",
   "license": "MIT",
@@ -43,7 +45,8 @@
     "redux": "3.4.0",
     "redux-logger": "3.0.1",
     "redux-thunk": "2.2.0",
-    "svg-url-loader": "2.0.1"
+    "svg-url-loader": "2.0.1",
+    "snyk": "^1.316.1"
   },
   "devDependencies": {
     "babel-core": "^6.24.1",
@@ -66,5 +69,6 @@
     "webpack": "^2.4.1",
     "webpack-dev-middleware": "^1.10.2",
     "webpack-hot-middleware": "^2.18.0"
-  }
+  },
+  "snyk": true
 }
