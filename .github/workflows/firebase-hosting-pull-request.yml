@@ -48,12 +48,6 @@ jobs:
       - run: npm run build
         env:
           REACT_APP_VERSION: ${{ github.sha }}
-      - name: Archive production artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: build
-          path: |
-            build
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
