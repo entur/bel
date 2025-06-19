@@ -14,8 +14,8 @@
   },
   "license": "EUPL",
   "dependencies": {
-    "@emotion/react": "11.11.1",
-    "@emotion/styled": "11.11.0",
+    "@emotion/react": "11.14.0",
+    "@emotion/styled": "11.14.0",
     "@entur/auth-provider": "1.1.1",
     "@entur/micro-frontend": "0.4.0",
     "@mui/icons-material": "5.14.19",
