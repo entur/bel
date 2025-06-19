@@ -24,7 +24,7 @@
     "@mui/styles": "5.14.20",
     "@sentry/react": "7.85.0",
     "@sentry/tracing": "7.85.0",
-    "@types/jest": "29.5.11",
+    "@types/jest": "29.5.14",
     "@types/node": "18.19.2",
     "@types/react": "17.0.71",
     "@types/react-dom": "18.2.17",
