@@ -1,8 +1,8 @@
 {
   "appEnv": "dev",
   "providersBaseUrl": "https://api.dev.entur.io/timetable-admin/v1/providers/",
-  "auth0Domain": "ror-entur-dev.eu.auth0.com",
-  "auth0ClientId": "ZFz0whLRMzf8Qk3wjXesHbhtLrvd0zkD",
+  "auth0Domain": "https://partner.dev.entur.org",
+  "auth0ClientId": "sXk2hc7vRCOFAYpIDlmtBExm3PM03UrS",
   "auth0Audience": "https://ror.api.dev.entur.io",
   "auth0ClaimsNamespace": "https://ror.entur.io/role_assignments",
   "udugMicroFrontendUrl": "https://netex-validation-reports.dev.entur.org",
