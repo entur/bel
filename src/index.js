@@ -45,7 +45,7 @@ const AuthenticatedApp = () => {
     });
   }
 
-  if (auth.isLoading || !auth.isAuthenticated) {
+  if (auth.isLoading || !auth.isAuthenticated || !auth.roleAssignments) {
     return null;
   }
 
