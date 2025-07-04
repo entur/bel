@@ -22,7 +22,7 @@
     "@mui/lab": "5.0.0-alpha.176",
     "@mui/material": "5.17.1",
     "@mui/styles": "5.17.1",
-    "@sentry/react": "7.120.3",
+    "@sentry/react": "9.35.0",
     "@sentry/tracing": "7.120.3",
     "@types/jest": "29.5.14",
     "@types/node": "18.19.115",
