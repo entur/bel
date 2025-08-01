@@ -26,6 +26,7 @@ import { connect } from "react-redux";
 import AsyncActions from "../actions/AsyncActions";
 import MicroFrontendWrapper from "./MicroFrontendWrapper";
 import { ConfigContext } from "../config/ConfigContext";
+import UserActions from "../actions/UserActions";
 
 const FetchStatus = (props) => {
   if (props.status !== "SUCCESS" && props.status !== "LOADING") {
@@ -44,6 +45,7 @@ const Root = ({ dispatch }) => {
   }, [auth]);
 
   useEffect(() => {
+    dispatch(AsyncActions.fetchUserContext(config.providersBaseUrl, auth));
     dispatch(AsyncActions.getAllSuppliers(auth));
   }, [auth]);
 

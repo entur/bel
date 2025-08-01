@@ -16,6 +16,7 @@
 
 import axios from "axios";
 import * as types from "./actionTypes";
+import UserActions from "./UserActions";
 
 const AsyncActions = {};
 
@@ -64,6 +65,14 @@ AsyncActions.getAllSuppliers = (auth) => async (dispatch, getState) => {
       dispatch(sendData(response.data, types.ERROR_SUPPLIERS));
     });
 };
+
+AsyncActions.fetchUserContext =
+  (providersBaseUrl, auth) => async (dispatch, getState) => {
+    const url = providersBaseUrl + "usercontext";
+    return axios.get(url, getConfig(auth)).then((response) => {
+      dispatch(UserActions.receiveUserContext(response.data));
+    });
+  };
 
 export const sendData = (payLoad, type) => ({
   payLoad,

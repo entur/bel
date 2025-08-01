@@ -43,7 +43,7 @@ import {
   AccountCircle,
 } from "@mui/icons-material";
 
-const Header = ({ dispatch, activeSupplier, supplierList }) => {
+const Header = ({ dispatch, activeSupplier, supplierList, preferredName }) => {
   const auth = useAuth();
   const [open, setOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
@@ -72,7 +72,7 @@ const Header = ({ dispatch, activeSupplier, supplierList }) => {
   };
 
   let title = activeSupplier ? activeSupplier.name : "";
-  let signOut = "Logg ut " + auth?.user?.name;
+  let signOut = "Logg ut " + preferredName;
 
   let userOrganisations = supplierList;
 
@@ -166,6 +166,7 @@ const Header = ({ dispatch, activeSupplier, supplierList }) => {
 const mapStateToProps = (state) => ({
   supplierList: state.asyncReducer.suppliers,
   activeSupplier: state.asyncReducer.currentSupplier,
+  preferredName: state.userReducer.preferredName,
 });
 
 export default connect(mapStateToProps)(Header);

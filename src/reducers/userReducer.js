@@ -18,6 +18,7 @@ import * as types from "./../actions/actionTypes";
 
 const intialState = {
   noOrganisations: false,
+  preferredName: "",
 };
 
 const userReducer = (state = intialState, action) => {
@@ -25,6 +26,10 @@ const userReducer = (state = intialState, action) => {
     case types.USER_NO_ORGANISATIONS:
       return Object.assign({}, state, { noOrganisations: true });
 
+    case types.RECEIVED_USER_CONTEXT:
+      return Object.assign({}, state, {
+        preferredName: action.payLoad.preferredName,
+      });
     default:
       return state;
   }
