@@ -34,7 +34,7 @@ class TabsContainer extends React.Component {
   }
 
   render() {
-    const { currentSupplier, auth, isLoading, config } = this.props;
+    const { currentSupplier, getToken, isLoading, config } = this.props;
 
     return (
       <TabContext value={this.props.tab}>
@@ -71,7 +71,7 @@ class TabsContainer extends React.Component {
                 name="Line statistics"
                 payload={{
                   providerId: `${currentSupplier.id}`,
-                  getToken: auth.getAccessToken,
+                  getToken,
                   locale: "NO",
                   showNumberOfLinesCard: true,
                   showDeliveryDateCard: true,
@@ -98,7 +98,7 @@ class TabsContainer extends React.Component {
               name="Events"
               payload={{
                 providerId: `${currentSupplier.id}`,
-                getToken: auth.getAccessToken,
+                getToken,
                 locale: "nb",
                 env: config.appEnv,
                 hideIgnoredExportNetexBlocks: true,
@@ -124,7 +124,6 @@ class TabsContainer extends React.Component {
 const mapStateToProps = (state) => ({
   currentSupplier: state.asyncReducer.currentSupplier,
   isLoading: state.asyncReducer.isLoading,
-  auth: state.userReducer.auth,
   config: state.config,
 });
 

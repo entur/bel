@@ -14,18 +14,19 @@
  *
  */
 
-import { useContext, useEffect } from "react";
+import { useCallback, useContext, useEffect } from "react";
 import Header from "../components/Header";
 import Main from "./Main";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { getTheme } from "../styles/themes/entur/";
-import { useAuth } from "@entur/auth-provider";
+import { useAuth } from "react-oidc-context";
 import { MicroFrontend } from "@entur/micro-frontend";
 import { Route, Switch } from "react-router-dom";
 import { connect } from "react-redux";
 import AsyncActions from "../actions/AsyncActions";
 import MicroFrontendWrapper from "./MicroFrontendWrapper";
 import { ConfigContext } from "../config/ConfigContext";
+import UserActions from "../actions/UserActions";
 
 const FetchStatus = (props) => {
   if (props.status !== "SUCCESS" && props.status !== "LOADING") {
@@ -39,9 +40,14 @@ const Root = ({ dispatch }) => {
   const auth = useAuth();
   const config = useContext(ConfigContext);
 
+  const getToken = useCallback(async () => {
+    return auth.user?.access_token;
+  }, [auth]);
+
   useEffect(() => {
-    dispatch(AsyncActions.getAllSuppliers());
-  }, []);
+    dispatch(AsyncActions.fetchUserContext(config.providersBaseUrl, auth));
+    dispatch(AsyncActions.getAllSuppliers(auth));
+  }, [auth]);
 
   return (
     <>
@@ -61,7 +67,7 @@ const Root = ({ dispatch }) => {
                       staticPath=""
                       name="NeTEx validation reports"
                       payload={{
-                        getToken: auth.getAccessToken,
+                        getToken,
                         locale: "nb",
                         env: config.appEnv,
                       }}

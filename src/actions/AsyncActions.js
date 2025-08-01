@@ -16,12 +16,13 @@
 
 import axios from "axios";
 import * as types from "./actionTypes";
+import UserActions from "./UserActions";
 
 const AsyncActions = {};
 
-const getConfig = async (auth) => {
+const getConfig = (auth) => {
   let config = {};
-  const accessToken = await auth.getAccessToken();
+  const accessToken = auth.user?.access_token;
   config.headers = {
     "Content-Type": "application/json",
     Accept: "application/json",
@@ -35,7 +36,7 @@ AsyncActions.changeActiveProvider = (id) => async (dispatch) => {
   dispatch(sendData(id, types.CHANGED_ACTIVE_PROVIDER));
 };
 
-AsyncActions.getAllSuppliers = () => async (dispatch, getState) => {
+AsyncActions.getAllSuppliers = (auth) => async (dispatch, getState) => {
   dispatch(sendData(null, types.REQUESTED_SUPPLIERS));
 
   const state = getState();
@@ -46,7 +47,7 @@ AsyncActions.getAllSuppliers = () => async (dispatch, getState) => {
     timeout: 20000,
     method: "get",
     responseType: "json",
-    ...(await getConfig(state.userReducer.auth)),
+    ...getConfig(auth),
   })
     .then((response) => {
       dispatch(sendData(response.data, types.RECEIVED_SUPPLIERS));
@@ -64,6 +65,14 @@ AsyncActions.getAllSuppliers = () => async (dispatch, getState) => {
       dispatch(sendData(response.data, types.ERROR_SUPPLIERS));
     });
 };
+
+AsyncActions.fetchUserContext =
+  (providersBaseUrl, auth) => async (dispatch, getState) => {
+    const url = providersBaseUrl + "usercontext";
+    return axios.get(url, getConfig(auth)).then((response) => {
+      dispatch(UserActions.receiveUserContext(response.data));
+    });
+  };
 
 export const sendData = (payLoad, type) => ({
   payLoad,

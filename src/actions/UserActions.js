@@ -18,4 +18,11 @@ import * as types from "./actionTypes";
 
 const UserActions = {};
 
+UserActions.receiveUserContext = (data) => {
+  return {
+    type: types.RECEIVED_USER_CONTEXT,
+    payLoad: data,
+  };
+};
+
 export default UserActions;
