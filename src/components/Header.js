@@ -14,7 +14,8 @@
  *
  */
 
-import React from "react";
+import React, { useState } from "react";
+import { useAuth } from "react-oidc-context";
 import AppBar from "@mui/material/AppBar";
 import { connect } from "react-redux";
 import AsyncActions, { sendData } from "../actions/AsyncActions";
@@ -42,141 +43,129 @@ import {
   AccountCircle,
 } from "@mui/icons-material";
 
-class Header extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      open: false,
-      anchorElMenu: null,
-    };
-  }
+const Header = ({ dispatch, activeSupplier, supplierList }) => {
+  const auth = useAuth();
+  const [open, setOpen] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [anchorElMenu, setAnchorElMenu] = useState(null);
 
-  async handleSupplierChange(id) {
+  const handleSupplierChange = async (id) => {
     if (id > -1) {
-      await this.props.dispatch(AsyncActions.changeActiveProvider(null));
-      await this.props.dispatch(AsyncActions.changeActiveProvider(id));
+      await dispatch(AsyncActions.changeActiveProvider(null));
+      await dispatch(AsyncActions.changeActiveProvider(id));
     }
-    this.handleRequestClose();
-  }
-
-  handleTouchTap = (event) => {
-    event.preventDefault();
-
-    this.setState({
-      open: true,
-      anchorEl: event.currentTarget,
-    });
+    handleRequestClose();
   };
 
-  handleRequestClose() {
-    this.setState({
-      open: false,
-    });
-  }
+  const handleTouchTap = (event) => {
+    event.preventDefault();
+    setOpen(true);
+    setAnchorEl(event.currentTarget);
+  };
 
-  render() {
-    const { activeSupplier, auth, supplierList } = this.props;
-    let title = activeSupplier ? activeSupplier.name : "";
-    let signOut = "Logg ut " + auth?.user?.name;
+  const handleRequestClose = () => {
+    setOpen(false);
+  };
 
-    let userOrganisations = supplierList;
+  const handleLogout = () => {
+    auth.signoutRedirect();
+  };
 
-    return (
-      <AppBar style={{ background: darkColor }} position="sticky">
-        <Toolbar>
-          <IconButton
-            onClick={(e) => this.handleTouchTap(e)}
-            sx={{ marginLeft: "-16px", marginRight: "8px" }}
+  let title = activeSupplier ? activeSupplier.name : "";
+  let signOut = "Logg ut " + auth?.user?.name;
+
+  let userOrganisations = supplierList;
+
+  return (
+    <AppBar style={{ background: darkColor }} position="sticky">
+      <Toolbar>
+        <IconButton
+          onClick={handleTouchTap}
+          sx={{ marginLeft: "-16px", marginRight: "8px" }}
+        >
+          <PermIdentity sx={{ color: white }} />
+        </IconButton>
+        <Typography
+          variant="h5"
+          component="div"
+          sx={{
+            flexGrow: 1,
+            color: white,
+            fontSize: "24px",
+            fontWeight: 400,
+          }}
+        >
+          {title}
+        </Typography>
+        <img src={logo} style={{ width: 40, height: "auto" }} />
+        <IconButton onClick={(e) => setAnchorElMenu(e.currentTarget)}>
+          <MoreVert sx={{ color: white }} />
+        </IconButton>
+        <Menu
+          id="menu-appbar"
+          anchorEl={anchorElMenu}
+          anchorOrigin={{
+            vertical: "top",
+            horizontal: "right",
+          }}
+          keepMounted
+          transformOrigin={{
+            vertical: "top",
+            horizontal: "right",
+          }}
+          open={Boolean(anchorElMenu)}
+          onClose={() => setAnchorElMenu(null)}
+        >
+          <MenuItem
+            component="a"
+            href="https://enturas.atlassian.net/wiki/spaces/PUBLIC/pages/637370715/Brukerveiledning+for+operat+rportal"
+            target="_blank"
           >
-            <PermIdentity sx={{ color: white }} />
-          </IconButton>
-          <Typography
-            variant="h5"
-            component="div"
-            sx={{
-              flexGrow: 1,
-              color: white,
-              fontSize: "24px",
-              fontWeight: 400,
-            }}
-          >
-            {title}
-          </Typography>
-          <img src={logo} style={{ width: 40, height: "auto" }} />
-          <IconButton
-            onClick={(e) => this.setState({ anchorElMenu: e.currentTarget })}
-          >
-            <MoreVert sx={{ color: white }} />
-          </IconButton>
-          <Menu
-            id="menu-appbar"
-            anchorEl={this.state.anchorElMenu}
-            anchorOrigin={{
-              vertical: "top",
-              horizontal: "right",
-            }}
-            keepMounted
-            transformOrigin={{
-              vertical: "top",
-              horizontal: "right",
-            }}
-            open={Boolean(this.state.anchorElMenu)}
-            onClose={() => this.setState({ anchorElMenu: null })}
-          >
+            <ListItemIcon>
+              <Help color="primary" />
+            </ListItemIcon>
+            <ListItemText>Brukerveiledning</ListItemText>
+          </MenuItem>
+          <MenuItem onClick={handleLogout}>
+            <ListItemIcon>
+              <AccountCircle color="primary" />
+            </ListItemIcon>
+            <ListItemText>{signOut}</ListItemText>
+          </MenuItem>
+        </Menu>
+      </Toolbar>
+      {supplierList ? (
+        <Menu
+          open={open}
+          anchorEl={anchorEl}
+          anchorOrigin={{ horizontal: "left", vertical: "bottom" }}
+          targetOrigin={{ horizontal: "left", vertical: "top" }}
+          onClose={handleRequestClose}
+        >
+          {userOrganisations.map((supplier, index) => (
             <MenuItem
-              component="a"
-              href="https://enturas.atlassian.net/wiki/spaces/PUBLIC/pages/637370715/Brukerveiledning+for+operat+rportal"
-              target="_blank"
+              key={"supplier" + index}
+              onClick={() => {
+                handleSupplierChange(supplier.id);
+              }}
             >
-              <ListItemIcon>
-                <Help color="primary" />
-              </ListItemIcon>
-              <ListItemText>Brukerveiledning</ListItemText>
+              <ListItemText>{supplier.name}</ListItemText>
+              <Typography variant="body2" color="text.secondary">
+                {supplier.id}
+              </Typography>
             </MenuItem>
-            <MenuItem
-              onClick={() => auth.logout({ returnTo: window.location.origin })}
-            >
-              <ListItemIcon>
-                <AccountCircle color="primary" />
-              </ListItemIcon>
-              <ListItemText>{signOut}</ListItemText>
-            </MenuItem>
-          </Menu>
-        </Toolbar>
-        {this.props.supplierList ? (
-          <Menu
-            open={this.state.open}
-            anchorEl={this.state.anchorEl}
-            anchorOrigin={{ horizontal: "left", vertical: "bottom" }}
-            targetOrigin={{ horizontal: "left", vertical: "top" }}
-            onClose={this.handleRequestClose.bind(this)}
-          >
-            {userOrganisations.map((supplier, index) => (
-              <MenuItem
-                key={"supplier" + index}
-                onClick={() => {
-                  this.handleSupplierChange(supplier.id);
-                }}
-              >
-                <ListItemText>{supplier.name}</ListItemText>
-                <Typography variant="body2" color="text.secondary">
-                  {supplier.id}
-                </Typography>
-              </MenuItem>
-            ))}
-          </Menu>
-        ) : (
-          <div style={{ padding: 20 }}>Ingen forhandlere</div>
-        )}
-      </AppBar>
-    );
-  }
-}
+          ))}
+        </Menu>
+      ) : (
+        <div style={{ padding: 20 }}>Ingen forhandlere</div>
+      )}
+    </AppBar>
+  );
+};
 
 const mapStateToProps = (state) => ({
   supplierList: state.asyncReducer.suppliers,
   activeSupplier: state.asyncReducer.currentSupplier,
-  auth: state.userReducer.auth,
 });
 
 export default connect(mapStateToProps)(Header);

@@ -16,56 +16,55 @@ import { connect } from "react-redux";
  *
  */
 
-import React from "react";
+import React, { useCallback } from "react";
 import TabsContainer from "./TabsContainer";
 import { withRouter } from "react-router-dom";
+import { useAuth } from "react-oidc-context";
 
-class Main extends React.Component {
-  handleLogout() {
-    const { auth } = this.props;
-    auth.logout({ returnTo: window.location.origin });
-  }
+const Main = ({ noOrganisations, match }) => {
+  const auth = useAuth();
 
-  render() {
-    const { noOrganisations, match } = this.props;
-    let tab = "status";
+  const getToken = useCallback(async () => {
+    return auth.user?.access_token;
+  }, [auth]);
 
-    if (match.params.tab) {
-      if (match.params.tab === "events") {
-        tab = "events";
-      }
-    }
+  const handleLogout = () => {
+    auth.signoutRedirect();
+  };
 
-    if (!noOrganisations) {
-      return (
-        <div>
-          <TabsContainer tab={tab} />
-        </div>
-      );
-    } else {
-      return (
-        <div>
-          <div style={{ marginTop: 20, fontWeight: 600, fontSize: 18 }}>
-            Din bruker er ikke tilknyttet en organisasjon
-          </div>
-          <div>
-            Ta kontakt med din administrator for å rett tilgang til ditt område.
-          </div>
-          <a
-            style={{ cursor: "pointer" }}
-            onClick={this.handleLogout.bind(this)}
-          >
-            Logg ut
-          </a>
-        </div>
-      );
+  let tab = "status";
+
+  if (match.params.tab) {
+    if (match.params.tab === "events") {
+      tab = "events";
     }
   }
-}
+
+  if (!noOrganisations) {
+    return (
+      <div>
+        <TabsContainer tab={tab} getToken={getToken} />
+      </div>
+    );
+  } else {
+    return (
+      <div>
+        <div style={{ marginTop: 20, fontWeight: 600, fontSize: 18 }}>
+          Din bruker er ikke tilknyttet en organisasjon
+        </div>
+        <div>
+          Ta kontakt med din administrator for å rett tilgang til ditt område.
+        </div>
+        <a style={{ cursor: "pointer" }} onClick={handleLogout}>
+          Logg ut
+        </a>
+      </div>
+    );
+  }
+};
 
 const mapStateToProps = (state) => ({
   noOrganisations: state.userReducer.noOrganisations,
-  auth: state.userReducer.auth,
 });
 
 export default withRouter(connect(mapStateToProps)(Main));

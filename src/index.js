@@ -20,7 +20,7 @@ import { Provider } from "react-redux";
 import Root from "./containers/Root";
 import configureStore from "./store/store";
 import cfgreader from "./config/readConfig";
-import AuthProvider, { useAuth } from "@entur/auth-provider";
+import { AuthProvider, useAuth } from "react-oidc-context";
 import * as Sentry from "@sentry/react";
 import { BrowserTracing } from "@sentry/tracing";
 
@@ -45,13 +45,18 @@ const AuthenticatedApp = () => {
     });
   }
 
-  if (auth.isLoading || !auth.isAuthenticated || !auth.roleAssignments) {
+  if (auth.isLoading) {
+    return null;
+  }
+
+  if (!auth.isAuthenticated) {
+    auth.signinRedirect();
     return null;
   }
 
   return (
     <Sentry.ErrorBoundary showDialog>
-      <Provider store={configureStore(auth, config)}>
+      <Provider store={configureStore(config)}>
         <Root />
       </Provider>
     </Sentry.ErrorBoundary>
@@ -59,16 +64,22 @@ const AuthenticatedApp = () => {
 };
 
 function renderIndex(config) {
+  const oidcConfig = {
+    authority: `https://${config.auth0Domain}`,
+    client_id: config.auth0ClientId,
+    redirect_uri: window.location.origin,
+    response_type: "code",
+    scope: "openid profile email",
+    automaticSilentRenew: true,
+    includeIdTokenInSilentRenew: true,
+  };
+
+  if (config.auth0Audience) {
+    oidcConfig.extraQueryParams = { audience: config.auth0Audience };
+  }
+
   render(
-    <AuthProvider
-      auth0Config={{
-        domain: config.auth0Domain,
-        clientId: config.auth0ClientId,
-        audience: config.auth0Audience,
-        redirectUri: window.location.origin,
-      }}
-      auth0ClaimsNamespace={config.auth0ClaimsNamespace}
-    >
+    <AuthProvider {...oidcConfig}>
       <ConfigContext.Provider value={config}>
         <BrowserRouter>
           <AuthenticatedApp />

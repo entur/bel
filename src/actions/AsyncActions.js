@@ -19,9 +19,9 @@ import * as types from "./actionTypes";
 
 const AsyncActions = {};
 
-const getConfig = async (auth) => {
+const getConfig = (auth) => {
   let config = {};
-  const accessToken = await auth.getAccessToken();
+  const accessToken = auth.user?.access_token;
   config.headers = {
     "Content-Type": "application/json",
     Accept: "application/json",
@@ -35,7 +35,7 @@ AsyncActions.changeActiveProvider = (id) => async (dispatch) => {
   dispatch(sendData(id, types.CHANGED_ACTIVE_PROVIDER));
 };
 
-AsyncActions.getAllSuppliers = () => async (dispatch, getState) => {
+AsyncActions.getAllSuppliers = (auth) => async (dispatch, getState) => {
   dispatch(sendData(null, types.REQUESTED_SUPPLIERS));
 
   const state = getState();
@@ -46,7 +46,7 @@ AsyncActions.getAllSuppliers = () => async (dispatch, getState) => {
     timeout: 20000,
     method: "get",
     responseType: "json",
-    ...(await getConfig(state.userReducer.auth)),
+    ...getConfig(auth),
   })
     .then((response) => {
       dispatch(sendData(response.data, types.RECEIVED_SUPPLIERS));
