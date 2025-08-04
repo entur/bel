@@ -26,7 +26,7 @@ import { BrowserTracing } from "@sentry/tracing";
 import "./styles/css/main.scss";
 import { BrowserRouter } from "react-router-dom";
 import { ConfigContext } from "./config/ConfigContext";
-import {createRoot} from "react-dom/client";
+import { createRoot } from "react-dom/client";
 
 const AuthenticatedApp = () => {
   const config = useContext(ConfigContext);
