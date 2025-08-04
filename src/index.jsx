@@ -15,7 +15,6 @@
  */
 
 import React, { useContext } from "react";
-import { render } from "react-dom";
 import { Provider } from "react-redux";
 import Root from "./containers/Root.jsx";
 import configureStore from "./store/store";
@@ -27,6 +26,7 @@ import { BrowserTracing } from "@sentry/tracing";
 import "./styles/css/main.scss";
 import { BrowserRouter } from "react-router-dom";
 import { ConfigContext } from "./config/ConfigContext";
+import {createRoot} from "react-dom/client";
 
 const AuthenticatedApp = () => {
   const config = useContext(ConfigContext);
@@ -78,15 +78,16 @@ function renderIndex(config) {
     oidcConfig.extraQueryParams = { audience: config.auth0Audience };
   }
 
-  render(
+  const root = createRoot(document.getElementById("root"));
+
+  root.render(
     <AuthProvider {...oidcConfig}>
       <ConfigContext.Provider value={config}>
         <BrowserRouter>
           <AuthenticatedApp />
         </BrowserRouter>
       </ConfigContext.Provider>
-    </AuthProvider>,
-    document.getElementById("root")
+    </AuthProvider>
   );
 }
 
