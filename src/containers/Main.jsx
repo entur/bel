@@ -17,7 +17,7 @@ import { connect } from "react-redux";
  */
 
 import React, { useCallback } from "react";
-import TabsContainer from "./TabsContainer";
+import TabsContainer from "./TabsContainer.jsx";
 import { withRouter } from "react-router-dom";
 import { useAuth } from "react-oidc-context";
 

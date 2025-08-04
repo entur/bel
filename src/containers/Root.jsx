@@ -15,8 +15,8 @@
  */
 
 import { useCallback, useContext, useEffect } from "react";
-import Header from "../components/Header";
-import Main from "./Main";
+import Header from "../components/Header.jsx";
+import Main from "./Main.jsx";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { getTheme } from "../styles/themes/entur/";
 import { useAuth } from "react-oidc-context";
@@ -24,7 +24,7 @@ import { MicroFrontend } from "@entur/micro-frontend";
 import { Route, Switch } from "react-router-dom";
 import { connect } from "react-redux";
 import AsyncActions from "../actions/AsyncActions";
-import MicroFrontendWrapper from "./MicroFrontendWrapper";
+import MicroFrontendWrapper from "./MicroFrontendWrapper.jsx";
 import { ConfigContext } from "../config/ConfigContext";
 import UserActions from "../actions/UserActions";
 

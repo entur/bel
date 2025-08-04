@@ -15,7 +15,7 @@
  */
 
 import { getEnvironment } from "./getEnvironment";
-const globalConfig = require("./global.json");
+import globalConfig from "./global.json";
 
 var configreader = {};
 
