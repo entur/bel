@@ -18,7 +18,7 @@ import { connect } from "react-redux";
 
 import React from "react";
 import { withRouter } from "react-router-dom";
-import { MicroFrontendFetchStatus } from "../components/MicroFrontendFetchStatus";
+import { MicroFrontendFetchStatus } from "../components/MicroFrontendFetchStatus.jsx";
 import { MicroFrontend } from "@entur/micro-frontend";
 import { Tab } from "@mui/material";
 import { darkColor } from "../styles/themes/entur";

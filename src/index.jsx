@@ -17,7 +17,7 @@
 import React, { useContext } from "react";
 import { render } from "react-dom";
 import { Provider } from "react-redux";
-import Root from "./containers/Root";
+import Root from "./containers/Root.jsx";
 import configureStore from "./store/store";
 import cfgreader from "./config/readConfig";
 import { AuthProvider, useAuth } from "react-oidc-context";

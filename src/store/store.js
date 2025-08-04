@@ -41,11 +41,12 @@ export default function configureStore(config) {
 
   let store = createStore(createRootReducer(), initialState, enchancer);
 
-  if (module.hot) {
-    // Enable Webpack hot module replacement for reducers
-    module.hot.accept("../reducers", () => {
-      const nextRootReducer = require("../reducers/");
-      store.replaceReducer(nextRootReducer());
+  if (import.meta.hot) {
+    // Enable Vite hot module replacement for reducers
+    import.meta.hot.accept("../reducers", (newModule) => {
+      if (newModule) {
+        store.replaceReducer(newModule.default());
+      }
     });
   }
 
