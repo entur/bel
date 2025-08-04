@@ -15,7 +15,7 @@
   "dependencies": {
     "@emotion/react": "11.14.0",
     "@emotion/styled": "11.14.1",
-    "@entur/micro-frontend": "0.4.0",
+    "@entur/micro-frontend": "0.5.0",
     "@mui/icons-material": "5.18.0",
     "@mui/lab": "5.0.0-alpha.177",
     "@mui/material": "5.18.0",
