@@ -45,7 +45,7 @@
     "lint-staged": "10.5.4",
     "prettier": "2.8.8",
     "sass": "1.89.2",
-    "vite": "7.0.6"
+    "vite": "7.1.5"
   },
   "husky": {
     "hooks": {
