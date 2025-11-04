@@ -1,8 +1,8 @@
 {
   "appEnv": "test",
   "providersBaseUrl": "https://api.staging.entur.io/timetable-admin/v1/providers/",
-  "auth0Domain": "ror-entur-staging.eu.auth0.com",
-  "auth0ClientId": "Mj0umIJgASVkJjshc37hhatqqszUVXU4",
+  "auth0Domain": "partner.staging.entur.org",
+  "auth0ClientId": "kv4aViL0PZODyROZpAtZZHXsptwd0U4k",
   "auth0Audience": "https://ror.api.staging.entur.io",
   "auth0ClaimsNamespace": "https://ror.entur.io/role_assignments",
   "udugMicroFrontendUrl": "https://netex-validation-reports.staging.entur.org",
