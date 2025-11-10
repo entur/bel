@@ -22,7 +22,7 @@
     "@mui/styles": "6.4.8",
     "@sentry/react": "7.120.4",
     "@sentry/tracing": "7.120.4",
-    "@types/jest": "29.5.14",
+    "@types/jest": "30.0.0",
     "axios": "1.11.0",
     "oidc-client-ts": "3.3.0",
     "react": "19.1.1",
