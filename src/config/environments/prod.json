@@ -3,7 +3,7 @@
   "providersBaseUrl": "https://api.entur.io/timetable-admin/v1/providers/",
   "auth0Domain": "partner.entur.org",
   "auth0ClientId": "N8VOeyFGH9EvHImt3OonB6XDC93vGiPL",
-  "auth0Audience": "https://ror.api.entur.io",
+  "auth0Audience": "https://api.entur.io",
   "auth0ClaimsNamespace": "https://ror.entur.io/role_assignments",
   "udugMicroFrontendUrl": "https://netex-validation-reports.entur.org",
   "ninsarMicroFrontendUrl": "https://line-statistics.entur.org",
