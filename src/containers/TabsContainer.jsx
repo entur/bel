@@ -98,6 +98,7 @@ class TabsContainer extends React.Component {
               name="Events"
               payload={{
                 providerId: `${currentSupplier.id}`,
+                provider: currentSupplier,
                 getToken,
                 locale: "nb",
                 env: config.appEnv,
