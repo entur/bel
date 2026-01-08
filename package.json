@@ -34,7 +34,7 @@
     "redux-devtools-extension": "2.13.9",
     "redux-logger": "3.0.6",
     "redux-thunk": "2.4.2",
-    "typescript": "4.9.5"
+    "typescript": "5.9.3"
   },
   "devDependencies": {
     "@types/node": "24.2.0",
