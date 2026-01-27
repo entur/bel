@@ -20,7 +20,7 @@
     "@mui/lab": "5.0.0-alpha.177",
     "@mui/material": "7.2.0",
     "@mui/styles": "6.4.8",
-    "@sentry/react": "7.120.4",
+    "@sentry/react": "10.37.0",
     "@sentry/tracing": "7.120.4",
     "@types/jest": "29.5.14",
     "axios": "1.11.0",
