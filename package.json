@@ -24,7 +24,7 @@
     "@sentry/tracing": "7.120.4",
     "@types/jest": "29.5.14",
     "axios": "1.11.0",
-    "oidc-client-ts": "3.3.0",
+    "oidc-client-ts": "3.4.1",
     "react": "19.1.1",
     "react-dom": "19.1.1",
     "react-oidc-context": "3.3.0",
