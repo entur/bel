@@ -52,3 +52,4 @@ jobs:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_ENT_BEL_DEV }}'
           projectId: ent-bel-dev
+          target: dev

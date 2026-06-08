@@ -3,5 +3,22 @@
     "dev": "ent-bel-dev",
     "test": "ent-bel-tst",
     "prod": "ent-bel-prd"
+  },
+  "targets": {
+    "ent-bel-dev": {
+      "hosting": {
+        "dev": ["ent-bel-dev"]
+      }
+    },
+    "ent-bel-tst": {
+      "hosting": {
+        "tst": ["ent-bel-tst"]
+      }
+    },
+    "ent-bel-prd": {
+      "hosting": {
+        "prd": ["ent-bel-prd"]
+      }
+    }
   }
 }
